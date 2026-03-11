@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="welcome-section">
+    <div class="icon-header">🔐</div>
+    <h1 class="title">Área de Administrador</h1>
+    <p class="subtitle">Bem-vindo ao painel administrativo</p>
+    
+    <div class="admin-tabs">
+      <button class="tab-btn tab-active" id="dashboardTab">
+        <span class="tab-icon">📊</span>
+        Dashboard
+      </button>
+      <button class="tab-btn" id="promptsTab">
+        <span class="tab-icon">📝</span>
+        Prompts
+      </button>
+      <button class="tab-btn" id="settingsTab">
+        <span class="tab-icon">⚙️</span>
+        Configurações
+      </button>
+    </div>
+    
+    <div class="tab-content active" id="dashboardContent">
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <span class="stat-icon">✓</span>
+          <p>Você está logado como Administrador</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">🎯</span>
+          <p>Gerencie todos os recursos do sistema</p>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">📋</span>
+          <p>Visualize todos os prompts utilizados</p>
+        </div>
+      </div>
+      
+      <div class="buttons-container">
+        <a class="btn btn-back" href="/">
+          <span class="btn-icon">⬅️</span>
+          <span class="btn-text">Voltar para Início</span>
+        </a>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="promptsContent">
+      <div class="prompts-list">
+        <h3 class="prompts-title">📝 Prompts do Projeto</h3>
+        <div class="prompts-container" id="promptsContainer">
+          <p>Carregando prompts...</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="settingsContent">
+      <div class="settings-panel">
+        <div class="setting-item">
+          <h4>Preferências de Interface</h4>
+          <p>Tema: <strong id="themeInfo">Claro</strong></p>
+        </div>
+        <div class="setting-item">
+          <h4>Informações do Sistema</h4>
+          <p>View Engine: <strong>Handlebars (HBS)</strong></p>
+          <p>Versão: <strong>1.0.0</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Carregar prompts
+  fetch('/data/prompts.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('promptsContainer');
+      container.innerHTML = '';
+      data.prompts.forEach(prompt => {
+        const div = document.createElement('div');
+        div.className = 'prompt-item';
+        div.innerHTML = `
+          <div class="prompt-header">
+            <span class="prompt-number">#${prompt.numero}</span>
+            <h4>${prompt.descricao}</h4>
+          </div>
+          <p class="prompt-text">${prompt.prompt}</p>
+        `;
+        container.appendChild(div);
+      });
+    })
+    .catch(error => {
+      document.getElementById('promptsContainer').innerHTML = '<p>Erro ao carregar prompts</p>';
+    });
+  
+  // Gerenciar abas
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+  
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', function() {
+      tabs.forEach(t => t.classList.remove('tab-active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('tab-active');
+      contents[index].classList.add('active');
+      
+      if(index === 0) {
+        document.getElementById('themeInfo').textContent = 
+          document.documentElement.getAttribute('data-theme') === 'dark' ? 'Escuro' : 'Claro';
+      }
+    });
+  });
+</script>

@@ -1,0 +1,29 @@
+{
+  "prompts": [
+    {
+      "numero": 1,
+      "descricao": "Melhoria de interfaces - Index e ADM",
+      "prompt": "melhore a interface dos arquivos Index e adm, faca com que o arquivo index tenha uma forma de 'Entrar como Usuario' para enviar o usuario ate a rota users, e a de 'Entrar como ADM' e envie-o para a rota adm"
+    },
+    {
+      "numero": 2,
+      "descricao": "Modo claro/escuro e diferenciação de interfaces",
+      "prompt": "muito bem, agora faca um botao no rodape de cada um destes para fazer um 'modo claro/escuro', alem disso, modifique um pouco a interface de cada um para que eles fiquem so um pouco diferentes entre si"
+    },
+    {
+      "numero": 3,
+      "descricao": "Melhoria do modo escuro",
+      "prompt": "o modo escuro deveria fazer com que toda a tela no geral ficasse mais escura mas ainda bem legivel para nao machucar os olhos, o Pug ainda esta dando erro"
+    },
+    {
+      "numero": 4,
+      "descricao": "Arquivo de prompts e arquivo de anotação",
+      "prompt": "por gentileza, crie um arquivo que servira apenas de anotacao e consulta, em cada um destes na rots ADM, aonde ele devera conter cada um dos promt utilizados nesse site ate o momento, tambem melhore um pouco a interface do AppHbs e diferencie ele um pouco mais do Pug"
+    }
+  ],
+  "observacoes": {
+    "objetivo": "Documentar todos os prompts utilizados no desenvolvimento dos view engines (Pug, Handlebars, EJS)",
+    "data_criacao": "11 de março de 2026",
+    "proximos_passos": "Manter este arquivo atualizado com novos prompts conforme o projeto evolui"
+  }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="main-content">
+      {{{body}}}
+    </div>
+    
+    <footer class="app-footer">
+      <div class="footer-content">
+        <button class="theme-toggle" id="themeToggle">
+          <span class="toggle-icon">☀️</span>
+        </button>
+        <span class="app-name">AppHbs</span>
+      </div>
+    </footer>
+    
+    <script>
+      document.getElementById('themeToggle').addEventListener('click', function() {
+        const html = document.documentElement;
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        this.querySelector('.toggle-icon').textContent = isDark ? '☀️' : '🌙';
+      });
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeToggle').querySelector('.toggle-icon').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="main-content">
+      <div class="container">
+        <div class="welcome-section">
+          <div class="icon-header">🔐</div>
+          <h1 class="title">Área de Administrador</h1>
+          <p class="subtitle">Bem-vindo ao painel administrativo</p>
+          
+          <div class="admin-tabs">
+            <button class="tab-btn tab-active" id="dashboardTab">
+              <span class="tab-icon">🎯</span>
+              Dashboard
+            </button>
+            <button class="tab-btn" id="promptsTab">
+              <span class="tab-icon">📝</span>
+              Prompts
+            </button>
+          </div>
+          
+          <div class="tab-content active" id="dashboardContent">
+            <div class="content-box">
+              <p>✓ Você está logado como Administrador</p>
+              <p>✓ Aqui você pode gerenciar todos os recursos do sistema</p>
+            </div>
+            
+            <div class="buttons-container">
+              <a class="btn btn-back" href="/">
+                <span class="btn-icon">⬅️</span>
+                <span class="btn-text">Voltar para Início</span>
+              </a>
+            </div>
+          </div>
+          
+          <div class="tab-content" id="promptsContent">
+            <div class="prompts-list">
+              <h3 class="prompts-title">📝 Prompts do Projeto</h3>
+              <div class="prompts-container" id="promptsContainer">
+                <p>Carregando prompts...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="app-footer">
+      <div class="footer-content">
+        <button class="theme-toggle" id="themeToggle">
+          <span class="toggle-icon">☀️</span>
+        </button>
+        <span class="app-name">AppEjs</span>
+      </div>
+    </footer>
+    
+    <script>
+      // Theme Toggle
+      document.getElementById('themeToggle').addEventListener('click', function() {
+        const html = document.documentElement;
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        this.querySelector('.toggle-icon').textContent = isDark ? '☀️' : '🌙';
+      });
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeToggle').querySelector('.toggle-icon').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+      
+      // Tab Switching
+      const dashboardTab = document.getElementById('dashboardTab');
+      const promptsTab = document.getElementById('promptsTab');
+      const dashboardContent = document.getElementById('dashboardContent');
+      const promptsContent = document.getElementById('promptsContent');
+      
+      dashboardTab.addEventListener('click', function() {
+        dashboardTab.classList.add('tab-active');
+        promptsTab.classList.remove('tab-active');
+        dashboardContent.classList.add('active');
+        promptsContent.classList.remove('active');
+      });
+      
+      promptsTab.addEventListener('click', function() {
+        promptsTab.classList.add('tab-active');
+        dashboardTab.classList.remove('tab-active');
+        promptsContent.classList.add('active');
+        dashboardContent.classList.remove('active');
+      });
+      
+      // Load Prompts
+      fetch('/data/prompts.json')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('promptsContainer');
+          container.innerHTML = '';
+          data.prompts.forEach(prompt => {
+            const div = document.createElement('div');
+            div.className = 'prompt-item';
+            div.innerHTML = `
+              <div class="prompt-header">
+                <span class="prompt-number">#${prompt.numero}</span>
+                <h4>${prompt.descricao}</h4>
+              </div>
+              <p class="prompt-text">${prompt.prompt}</p>
+            `;
+            container.appendChild(div);
+          });
+        })
+        .catch(error => console.error('Erro ao carregar prompts:', error));
+    </script>
+  </body>
+</html>

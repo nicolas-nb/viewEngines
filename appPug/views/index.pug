@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .container
+    .welcome-section
+      .icon-header 🚀
+      h1.title Portal de Acesso
+      p.subtitle Escolha como deseja acessar o sistema
+      
+      .buttons-container
+        a.btn.btn-user(href="/users")
+          span.btn-icon 👤
+          span.btn-text Entrar como Usuário
+        
+        a.btn.btn-admin(href="/adm")
+          span.btn-icon 🔐
+          span.btn-text Entrar como ADM

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="main-content">
+      <div class="container">
+        <div class="welcome-section">
+          <div class="icon-header">👤</div>
+          <h1 class="title">Área de Usuário</h1>
+          <p class="subtitle">Bem-vindo ao portal do usuário</p>
+          
+          <div class="content-box">
+            <p>✓ Você está logado como Usuário</p>
+            <p>✓ Aqui você pode acessar seus dados e funcionalidades disponíveis</p>
+          </div>
+          
+          <div class="buttons-container">
+            <a class="btn btn-back" href="/">
+              <span class="btn-icon">⬅️</span>
+              <span class="btn-text">Voltar para Início</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="app-footer">
+      <div class="footer-content">
+        <button class="theme-toggle" id="themeToggle">
+          <span class="toggle-icon">☀️</span>
+        </button>
+        <span class="app-name">AppEjs</span>
+      </div>
+    </footer>
+    
+    <script>
+      document.getElementById('themeToggle').addEventListener('click', function() {
+        const html = document.documentElement;
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        this.querySelector('.toggle-icon').textContent = isDark ? '☀️' : '🌙';
+      });
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeToggle').querySelector('.toggle-icon').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+    </script>
+  </body>
+</html>

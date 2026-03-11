@@ -1,0 +1,68 @@
+extends layout
+
+block content
+  .container
+    .welcome-section
+      .icon-header 🔐
+      h1.title Área de Administrador
+      p.subtitle Bem-vindo ao painel administrativo
+      
+      .admin-tabs
+        button.tab-btn.tab-active#dashboardTab Dashboard
+        button.tab-btn#promptsTab Prompts
+      
+      .tab-content#dashboardTab.active
+        .content-box
+          p ✓ Você está logado como Administrador
+          p ✓ Aqui você pode gerenciar todos os recursos do sistema
+        
+        .buttons-container
+          a.btn.btn-back(href="/")
+            span.btn-icon ⬅️
+            span.btn-text Voltar para Início
+      
+      .tab-content#promptsTab
+        .prompts-list
+          h3.prompts-title 📝 Prompts do Projeto
+          .prompts-container#promptsContainer
+            p Carregando prompts...
+  
+  script.
+    fetch('/data/prompts.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('promptsContainer');
+        container.innerHTML = '';
+        data.prompts.forEach(prompt => {
+          const div = document.createElement('div');
+          div.className = 'prompt-item';
+          div.innerHTML = `
+            <div class="prompt-header">
+              <span class="prompt-number">#${prompt.numero}</span>
+              <h4>${prompt.descricao}</h4>
+            </div>
+            <p class="prompt-text">${prompt.prompt}</p>
+          `;
+          container.appendChild(div);
+        });
+      })
+      .catch(error => {
+        document.getElementById('promptsContainer').innerHTML = '<p>Erro ao carregar prompts</p>';
+      });
+    
+    const dashTab = document.getElementById('dashboardTab');
+    const promptTab = document.getElementById('promptsTab');
+    
+    dashTab.addEventListener('click', function() {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('tab-active'));
+      dashTab.classList.add('tab-active');
+      dashTab.parentElement.querySelector('#dashboardTab').nextElementSibling.classList.add('active');
+    });
+    
+    promptTab.addEventListener('click', function() {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('tab-active'));
+      promptTab.classList.add('tab-active');
+      promptTab.parentElement.parentElement.querySelectorAll('.tab-content')[1].classList.add('active');
+    });

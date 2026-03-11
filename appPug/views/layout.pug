@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    .main-content
+      block content
+    
+    footer.app-footer
+      .footer-content
+        button.theme-toggle#themeToggle
+          span.toggle-icon ☀️
+        span.app-name AppPug
+    
+    script.
+      document.getElementById('themeToggle').addEventListener('click', function() {
+        const html = document.documentElement;
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        this.querySelector('.toggle-icon').textContent = isDark ? '☀️' : '🌙';
+      });
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.getElementById('themeToggle').querySelector('.toggle-icon').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
