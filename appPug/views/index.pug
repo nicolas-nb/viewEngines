@@ -15,3 +15,27 @@ block content
         a.btn.btn-admin(href="/adm")
           span.btn-icon 🔐
           span.btn-text Entrar como ADM
+
+      .vectors
+        h2.vectors-title Vetores (Arrays)
+        label(for="vectorSelect") Escolha um vetor:
+        select#vectorSelect
+          each vetor, idx in vetores
+            option(value=idx) Vetor #{idx + 1}
+
+        .vector-list
+          each vetor, idx in vetores
+            .vector(data-index=idx)
+              h3 Vetor #{idx + 1}
+              ul
+                each item in vetor
+                  li= item
+
+      script.
+        const vectorSelect = document.getElementById('vectorSelect');
+        const vectors = document.querySelectorAll('.vector[data-index]');
+        function showVector(index) {
+          vectors.forEach(v => v.style.display = v.dataset.index === index ? 'block' : 'none');
+        }
+        vectorSelect.addEventListener('change', (e) => showVector(e.target.value));
+        showVector(vectorSelect.value);

@@ -17,6 +17,39 @@
             <p>✓ Aqui você pode acessar seus dados e funcionalidades disponíveis</p>
           </div>
           
+          <div class="vectors">
+            <h2 class="vectors-title">Vetores (Arrays)</h2>
+            <label for="vectorSelect">Escolha um vetor:</label>
+            <select id="vectorSelect">
+              <% vetores.forEach((vetor, i) => { %>
+                <option value="<%= i %>">Vetor <%= i + 1 %></option>
+              <% }); %>
+            </select>
+
+            <div class="vector-list">
+              <% vetores.forEach((vetor, i) => { %>
+                <div class="vector" data-index="<%= i %>">
+                  <h3>Vetor <%= i + 1 %></h3>
+                  <ul>
+                    <% vetor.forEach(item => { %>
+                      <li><%= item %></li>
+                    <% }); %>
+                  </ul>
+                </div>
+              <% }); %>
+            </div>
+          </div>
+
+          <script>
+            const vectorSelect = document.getElementById('vectorSelect');
+            const vectors = document.querySelectorAll('.vector[data-index]');
+            function showVector(index) {
+              vectors.forEach(v => v.style.display = v.dataset.index === index ? 'block' : 'none');
+            }
+            vectorSelect.addEventListener('change', (e) => showVector(e.target.value));
+            showVector(vectorSelect.value);
+          </script>
+
           <div class="buttons-container">
             <a class="btn btn-back" href="/">
               <span class="btn-icon">⬅️</span>

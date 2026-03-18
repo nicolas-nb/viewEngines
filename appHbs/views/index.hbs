@@ -15,5 +15,38 @@
         <span class="btn-text">Entrar como ADM</span>
       </a>
     </div>
+
+    <div class="vectors">
+      <h2 class="vectors-title">Vetores (Arrays)</h2>
+      <label for="vectorSelect">Escolha um vetor:</label>
+      <select id="vectorSelect">
+        {{#each vetores}}
+          <option value="{{@index}}">Vetor {{@index}}</option>
+        {{/each}}
+      </select>
+
+      <div class="vector-list">
+        {{#each vetores}}
+          <div class="vector" data-index="{{@index}}">
+            <h3>Vetor {{@index}}</h3>
+            <ul>
+              {{#each this}}
+                <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <script>
+      const vectorSelect = document.getElementById('vectorSelect');
+      const vectors = document.querySelectorAll('.vector[data-index]');
+      function showVector(index) {
+        vectors.forEach(v => v.style.display = v.dataset.index === index ? 'block' : 'none');
+      }
+      vectorSelect.addEventListener('change', (e) => showVector(e.target.value));
+      showVector(vectorSelect.value);
+    </script>
   </div>
 </div>
